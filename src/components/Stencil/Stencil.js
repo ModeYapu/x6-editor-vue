@@ -29,6 +29,15 @@ export const stencilInit = (graph) => {
             }
         },
         label: '开始',
+        "stateId": "Start1",
+        "stateType": "Start",
+        "stateProps": {
+            "StateMachine": {
+                "Name": "",
+                "Comment": "",
+                "Version": "0.0.1"
+            }
+        },
     })
     const ServiceTask = graph.createNode({
         shape: 'flow-rect',
@@ -43,6 +52,18 @@ export const stencilInit = (graph) => {
             }
         },
         label: 'ServiceTask',
+        "stateId": "ServiceTask1",
+        "stateType": "ServiceTask",
+        "stateProps": {
+            "ServiceName": "",
+            "ServiceMethod": "",
+            "Input": [
+                {}
+            ],
+            "Output": {},
+            "Status": {},
+            "Retry": []
+        },
     })
     const ScriptTask = graph.createNode({
         shape: 'flow-rect',
@@ -60,7 +81,7 @@ export const stencilInit = (graph) => {
     })
 
     const Choice = graph.createNode({
-        shape: 'flow-polygon',
+        shape: 'flow-rhombus',
         width: 80,
         height: 72,
         attrs: {
@@ -72,6 +93,9 @@ export const stencilInit = (graph) => {
             }
         },
         label: 'Choice',
+        "stateId": "Choice1",
+        "stateType": "Choice",
+        "stateProps": '',
     })
 
     const Compensation = graph.createNode({
@@ -102,6 +126,9 @@ export const stencilInit = (graph) => {
             }
         },
         label: '成功',
+        "stateId": "Succeed1",
+        "stateType": "Succeed",
+        "stateProps": '',
     })
 
     const Fail = graph.createNode({

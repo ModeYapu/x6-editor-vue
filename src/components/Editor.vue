@@ -40,9 +40,7 @@
                 <CodeMirror :code='DataJson' @code="codeChange" />
             </div>
             <div>
-                <div id="node-prop">
-                    label <input type="text" v-model="nodeArgs.node.store.data.attrs.text.text" @change="labelChange">
-                </div>
+                <ContextProps />
                 <div id="minimap-container"></div>
             </div>
         </div>
@@ -52,16 +50,18 @@
 <script>
 import { Graph } from '@antv/x6';
 import data from './data'
-import './define-node'
-import './define-edge'
+import './Register/index'
 import { stencilInit } from './Stencil/Stencil'
 import CodeMirror from './CodeMirror.vue'
 import ContextMenu from './ContextMenu.vue'
+import ContextProps from './ContextPorps/index.vue'
 import { eventResigner } from './event'
+import Vue from 'vue';
 export default {
     components: {
         CodeMirror,
-        ContextMenu
+        ContextMenu,
+        ContextProps
     },
     data() {
         return {
@@ -72,20 +72,8 @@ export default {
             },
             ShowJsonViewer: false,
             DataJson: '',
-            nodeArgs: {
-                node: {
-                    store: {
-                        data: {
-                            attrs: {
-                                text: {
-                                    text: ''
-                                }
-                            }
-                        }
-                    }
-                }
-            },            
-            copyCellPoint:{}
+
+            copyCellPoint: {}
         }
     },
 
@@ -145,7 +133,7 @@ export default {
                 },
             }
         });
-
+        Vue.prototype.graph = this.graph
         stencilInit(this.graph)
 
         eventResigner(this.graph)
@@ -187,11 +175,7 @@ export default {
         //     showPorts(ports, false)
         // })
 
-        this.graph.on('node:selected', (args) => {
-            // code here
-            console.log('select args', args)
-            this.nodeArgs = args
-        })
+
         document.addEventListener('mousedown', () => {
             this.graph.enablePanning()
             this.graph.disableMultipleSelection()
@@ -235,14 +219,7 @@ export default {
         showDesigner() {
             // this.graph.fromJSON()
         },
-        labelChange(e) {
-            let cells = this.graph.getSelectedCells()
-            console.log('labelChange', cells, e)
-            cells[0].setAttrs({
-                body: { fill: '#faad14' },
-                label: { text: this.nodeArgs.node.store.data.attrs.text.text },
-            })
-        },
+
         toFront() {
             let cells = this.graph.getSelectedCells()
             cells.forEach(item => {
@@ -263,7 +240,7 @@ export default {
             }
             return false
         },
-        pasteCells( offset = {dx:32,dy:32}) {
+        pasteCells(offset = { dx: 32, dy: 32 }) {
             if (!this.graph.isClipboardEmpty()) {
                 const cells = this.graph.paste({ offset: offset })
                 this.graph.cleanSelection()

@@ -4,21 +4,33 @@ import { EventBus } from "../eventBus";
 export const eventResigner = (graph) => {
     graph.on('edge:mouseenter', ({ cell }) => {
         cell.addTools([
-            {
-                name: 'vertices',
-                args: {
-                    snapRadius: 0,
-                    stopPropagation: false
-                }
-            },
-            { name: 'source-arrowhead' },
+            // {
+            //     name: 'vertices',
+            //     args: {
+            //         snapRadius: 0,
+            //         stopPropagation: false
+            //     }
+            // },
+            // { name: 'source-arrowhead' },
             { name: 'target-arrowhead' }
         ])
     })
+
+
+    graph.on('node:selected', (args) => {
+        // code here
+        console.log('select args', args)
+        EventBus.$emit('selectParams', { ...args, type: 'node' })
+    })
+    graph.on('edge:selected', (args) => {
+        // code here
+        console.log('select args', args)
+        EventBus.$emit('selectParams', { ...args, type: 'edge' })
+    })
+
     graph.on('edge:mouseleave', ({ cell }) => {
         cell.removeTools()
     })
-
 
     graph.on('cell:contextmenu', ({ e, x, y, cell, view }) => {
         console.log('cell:contextmenu', e, x, y, cell, view, Object.prototype.toString.call(cell))
