@@ -38,13 +38,6 @@ const IconFont = Icon.createFromIconfontCN({
     scriptUrl: require('../assets/font_1518433_oa5sw7ezue.js'),
 })
 
-// Vue.component('custom-icon', {
-//     render(h) {
-//         console.log('IconFont', h)
-//         return <IconFont type={`icon-${'copy'}`} />
-//     },
-// })
-
 export default {
     components: {
         IconFont: IconFont

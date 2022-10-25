@@ -1,36 +1,9 @@
 <template>
     <div>
-        <div>
-            <button @click="onUndo">undo</button>
-            <button @click="onRedo">redo</button>
-            |
-            <button @click="copyCells">copy</button>
-            <button @click="pasteCells">paste</button>
-            <button @click="deleteCells">delete</button>
-            |
-            <button @click="zoonIn">zoom In</button>
-            <button @click="zoonOut">zoom Out</button>
-            <button @click="toFront">toFront</button>
-            <button @click="toBack">toBack</button>
-            |
-            <button @click="fitToContent">fitToContent
-            </button>
-            <button @click="scaleContentToFit">scaleContentToFit
-            </button>
-
-            <button @click="multiple">multiple</button>
-            |
-            <button @click="()=>{
-                ShowJsonViewer=true
-                showJson()
-            }">showJson</button>
-            <button @click="()=>{
-                ShowJsonViewer=false  
-                showDesigner()         
-            }">showDesigner</button>
-            |
-            <button @click="save">save</button>
-        </div>
+        <ToolbarButton @onUndo='onUndo' @onRedo="onRedo" @copyCells='copyCells' @pasteCells="pasteCells"
+            @deleteCells='deleteCells' @zoonIn="zoonIn" @zoonOut="zoonOut" @toFront="toFront" @toBack="toBack"
+            @fitToContent="fitToContent" @scaleContentToFit="scaleContentToFit" @multiple="multiple"
+            @showJson="showJson" @showDesigner="showDesigner" @save="save" />
         <ContextMenu @onUndo='onUndo' @onRedo="onRedo" @copyCells='copyCells' @pasteCells="pasteCells"
             @deleteCells='deleteCells' />
         <div class="x6-wrapper">
@@ -55,6 +28,7 @@ import { stencilInit } from './Stencil/Stencil'
 import CodeMirror from './CodeMirror.vue'
 import ContextMenu from './ContextMenu.vue'
 import ContextProps from './ContextPorps/index.vue'
+import ToolbarButton from './EditorToolbar/ToolbarButton.vue';
 import { eventResigner } from './event'
 
 import { exportJson, importJson } from '../utils/utils'
@@ -63,7 +37,8 @@ export default {
     components: {
         CodeMirror,
         ContextMenu,
-        ContextProps
+        ContextProps,
+        ToolbarButton
     },
     data() {
         return {
@@ -207,6 +182,7 @@ export default {
             this.graph.scaleContentToFit(options)
         },
         showJson() {
+            this.ShowJsonViewer = true
             const jsonStr = JSON.stringify(exportJson(this.graph.toJSON()))
             this.DataJson = JSON.stringify(JSON.parse(jsonStr), null, 2)
         },
@@ -219,6 +195,7 @@ export default {
             }
         },
         showDesigner() {
+            this.ShowJsonViewer = false
             this.$nextTick(() => {
                 this.graphInit()
                 this.$nextTick(() => {
