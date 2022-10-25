@@ -41,7 +41,7 @@
             </div>
             <div>
                 <ContextProps />
-                <div id="minimap-container"></div>
+                <div id="minimap-container" v-if="!ShowJsonViewer"></div>
             </div>
         </div>
     </div>
@@ -56,6 +56,8 @@ import CodeMirror from './CodeMirror.vue'
 import ContextMenu from './ContextMenu.vue'
 import ContextProps from './ContextPorps/index.vue'
 import { eventResigner } from './event'
+
+import { exportJson, importJson } from '../utils/utils'
 import Vue from 'vue';
 export default {
     components: {
@@ -72,7 +74,6 @@ export default {
             },
             ShowJsonViewer: false,
             DataJson: '',
-
             copyCellPoint: {}
         }
     },
@@ -81,109 +82,108 @@ export default {
     computed: {},
 
     mounted() {
-        this.graph = new Graph({
-            container: document.getElementById('x6-container'),
-            width: 800,
-            height: 600,
-            autoResize: true,
-            // 画布是否可以拖动
-            panning: { enabled: true, eventTypes: ['leftMouseDown'], },
-            snapline: true, // 对齐线
-            history: true,  // 撤销/重做
-            clipboard: true, // 剪切板
-            // 点选/框选
-            selecting: {
-                enabled: true,
-                // multiple: true,
-                // rubberband: true,
-                showNodeSelectionBox: true,
-            },
-            // 快捷键
-            keyboard: {
-                enabled: true,
-                global: true,
-            },
-            minimap: {
-                enabled: true,
-                container: document.getElementById('minimap-container'),
-            },
-            background: {
-                color: '#fff', // 设置画布背景颜色
-            },
-            grid: {
-                size: 10,      // 网格大小 10px
-                visible: false, // 渲染网格背景
-            },
-            // 滚动画布
-            scroller: {
-                enabled: false,
-                pageVisible: true,
-                pageBreak: true,
-                pannable: true,
-            },
-            mousewheel: {
-                enabled: true,
-                modifiers: ['ctrl', 'meta'],
-                minScale: 0.5,
-                maxScale: 2,
-            },
-            connecting: {
-                snap: {
-                    radius: 20,
-                },
-            }
-        });
-        Vue.prototype.graph = this.graph
-        stencilInit(this.graph)
-
-        eventResigner(this.graph)
-
-        this.graph.fromJSON(data)
-
-        this.history = this.graph.history
-        this.history.on('change', () => {
-            this.state.canRedo = this.history.canRedo()
-            this.state.canUndo = this.history.canUndo()
-        })
-
-        this.graph.bindKey('ctrl+c', () => {
-            this.copyCells()
-        })
-
-        this.graph.bindKey('ctrl+v', () => {
-            this.pasteCells()
-        })
-
-        // 控制连接桩显示/隐藏
-        // const showPorts = (ports, show) => {
-        //     for (let i = 0, len = ports.length; i < len; i = i + 1) {
-        //         ports[i].style.visibility = show ? 'visible' : 'hidden'
-        //     }
-        // }
-        // this.graph.on('node:mouseenter', () => {
-        //     const container = document.getElementById('graph-container')
-        //     const ports = container.querySelectorAll(
-        //         '.x6-port-body',
-        //     )
-        //     showPorts(ports, true)
-        // })
-        // this.graph.on('node:mouseleave', () => {
-        //     const container = document.getElementById('graph-container')
-        //     const ports = container.querySelectorAll(
-        //         '.x6-port-body',
-        //     )
-        //     showPorts(ports, false)
-        // })
-
-
-        document.addEventListener('mousedown', () => {
-            this.graph.enablePanning()
-            this.graph.disableMultipleSelection()
-            this.graph.disableRubberband()
-        })
+        this.graphInit()
+        this.graph.fromJSON(importJson(data))
     },
 
     methods: {
+
+        graphInit() {
+            this.graph = new Graph({
+                container: document.getElementById('x6-container'),
+                width: 800,
+                height: 600,
+                autoResize: true,
+                // 画布是否可以拖动
+                panning: { enabled: true, eventTypes: ['leftMouseDown'], },
+                snapline: true, // 对齐线
+                history: true,  // 撤销/重做
+                clipboard: true, // 剪切板
+                // 点选/框选
+                selecting: {
+                    enabled: true,
+                    // multiple: true,
+                    // rubberband: true,
+                    showNodeSelectionBox: true,
+                },
+                // 快捷键
+                keyboard: {
+                    enabled: true,
+                    global: true,
+                },
+                minimap: {
+                    enabled: true,
+                    container: document.getElementById('minimap-container'),
+                },
+                background: {
+                    color: '#fff', // 设置画布背景颜色
+                },
+                grid: {
+                    size: 10,      // 网格大小 10px
+                    visible: false, // 渲染网格背景
+                },
+                // 滚动画布
+                scroller: {
+                    enabled: false,
+                    pageVisible: true,
+                    pageBreak: true,
+                    pannable: true,
+                },
+                mousewheel: {
+                    enabled: true,
+                    modifiers: ['ctrl', 'meta'],
+                    minScale: 0.5,
+                    maxScale: 2,
+                },
+                connecting: {
+                    // 连线
+                    allowPort: true, // 是否允许边链接到链接桩
+                    allowEdge: false, // 是否允许边链接到另一个边
+                    allowNode: false, // 是否允许边链接到节点（非节点上的链接桩)
+                    allowLoop: false, // 是否允许创建循环连线，即边的起始节点和终止节点为同一节点
+                    allowMulti: false, // 是否允许在相同的起始节点和终止之间创建多条边
+                    allowBlank: false, // 是否允许连接到画布空白位置的点
+                    highlight: true, // 拖动边时，是否高亮显示所有可用的连接桩或节点
+                    snap: {
+                        radius: 50,
+                    }, // 自动吸附
+                    // router: {
+                    //     // 布局方式
+                    //     name: 'er',
+                    //     args: {
+                    //         offset: 'center',
+                    //         direction: 'V',
+                    //     },
+                    // }
+                }
+            });
+
+            Vue.prototype.graph = this.graph
+            stencilInit(this.graph)
+
+            eventResigner(this.graph)
+
+
+            this.history = this.graph.history
+            this.history.on('change', () => {
+                this.state.canRedo = this.history.canRedo()
+                this.state.canUndo = this.history.canUndo()
+            })
+
+            this.graph.bindKey('ctrl+c', () => {
+                this.copyCells()
+            })
+
+            this.graph.bindKey('ctrl+v', () => {
+                this.pasteCells()
+            })
+
+            document.addEventListener('mousedown', () => {
+                this.graph.enablePanning()
+                this.graph.disableMultipleSelection()
+                this.graph.disableRubberband()
+            })
+        },
         onUndo() {
             this.history.undo()
         },
@@ -195,6 +195,9 @@ export default {
         save() {
             const gData = this.graph.toJSON()
             console.log('gData', gData)
+            exportJson(gData)
+
+            console.log('exportJson', exportJson(gData))
         },
 
         fitToContent() {
@@ -209,15 +212,24 @@ export default {
             this.graph.scaleContentToFit(options)
         },
         showJson() {
-            const jsonStr = JSON.stringify(this.graph.toJSON())
+            const jsonStr = JSON.stringify(exportJson(this.graph.toJSON()))
             this.DataJson = JSON.stringify(JSON.parse(jsonStr), null, 2)
         },
         codeChange(params) {
-            console.log('codeChange', params)
-            this.graph.fromJSON(JSON.parse(params))
+            this.codeChangeJson = importJson(JSON.parse(params))
+            try {
+                console.log('codeChange', importJson(JSON.parse(params)))
+            } catch (error) {
+                console.log('codeChangeerror', error)
+            }
         },
         showDesigner() {
-            // this.graph.fromJSON()
+            this.$nextTick(() => {
+                this.graphInit()
+                this.$nextTick(() => {
+                    this.graph.fromJSON(this.codeChangeJson)
+                })
+            })
         },
 
         toFront() {

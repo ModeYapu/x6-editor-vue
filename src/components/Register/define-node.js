@@ -18,19 +18,19 @@ const portProps = {
         },
         items: [
             {
-                id: 'port1',
+                id: 0,
                 group: 'group1' // 指定分组名称
             },
             {
-                id: 'port2',
+                id: 1,
                 group: 'group2' // 指定分组名称
             },
             {
-                id: 'port3',
+                id: 2,
                 group: 'group3' // 指定分组名称
             },
             {
-                id: 'port4',
+                id: 3,
                 group: 'group4' // 指定分组名称
             }
         ]
@@ -107,4 +107,4 @@ const flowEllipse = Shape.Ellipse.define({
     ...portProps
 })
 
-export { flowRect, flowCircle, flowPolygon, flowEllipse }
+export { flowRect, flowCircle, flowPolygon, flowEllipse, portProps }

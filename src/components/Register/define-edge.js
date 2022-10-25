@@ -10,3 +10,16 @@ Shape.Edge.config({
     }
   }
 })
+
+const flowEdge = Shape.Edge.define({
+  attrs: {
+    line: {
+      radius: 10,
+      offset: 30,
+      endArrow: true,
+      stroke: '#F6BD16'
+    }
+  }
+})
+
+export { flowEdge }

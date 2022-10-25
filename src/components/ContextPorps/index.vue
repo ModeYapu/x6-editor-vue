@@ -66,8 +66,8 @@ export default {
 
             } else {
                 this.nodeArgs = {
-                    label: '',
-                    stateProps: params.edge.store.data.stateProps,
+                    label: params.edge.store.data.labels ? params.edge.store.data.labels[0].attrs.text.text : '',
+                    stateProps: JSON.stringify(params.edge.store.data.stateProps, null, 2)
                 }
             }
         })
