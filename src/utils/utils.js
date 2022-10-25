@@ -1,9 +1,10 @@
 import { portProps } from '../components/Register/define-node'
 
 const exportJson = (json) => {
+    console.log('jsno', json)
     let obj = {
-        nodes: json.cells.filter(it => it.shape !== 'edge').map(node => { return detailNode(node) }),
-        edges: json.cells.filter(it => it.shape === 'edge').map(edge => { return detailEdge(edge) })
+        nodes: json.cells.filter(it => it.type === 'node').map(node => { return detailNode(node) }),
+        edges: json.cells.filter(it => it.type !== 'node').map(edge => { return detailEdge(edge) })
     }
     return obj
 }
@@ -36,7 +37,7 @@ function detailEdge(edge) {
 
     obj.target = edge.target.cell
     obj.targetAnchor = edge.target.port
-    obj.shape = edge.edge
+    obj.shape = edge.shape
     obj.connector = edge.connector
     if (edge.labels && edge.labels.length) {
         obj.label = edge.labels[0].attrs.text.text
@@ -78,7 +79,6 @@ function detailImportNode(node) {
         y: node.y
     }
     obj.type = 'node'
-
     return obj
 }
 
@@ -107,16 +107,11 @@ function detailImportEdge(edge) {
         }]
     }
 
-    obj.shape = "edge"
-    obj.connector = connectorObj[edge.shape] || edge.connector || 'smooth'
-    obj.vertices = []
+    obj.shape = edge.shape || 'flow-smooth'
+
     return obj
 }
 
-const connectorObj = {
-    'flow-polyline': 'normal',
-    'flow-polyline-rounded': 'rounded'
-}
 
 export {
     exportJson,

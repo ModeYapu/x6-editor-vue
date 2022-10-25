@@ -21,5 +21,48 @@ const flowEdge = Shape.Edge.define({
     }
   }
 })
+// flow-polyline-round
+// flow-polyline
+// flow-smooth
 
-export { flowEdge }
+const flowPolyline = Shape.Edge.define({
+  attrs: {
+    line: {
+      radius: 10,
+      offset: 30,
+      endArrow: true,
+      stroke: '#F6BD16'
+    }
+  },
+  router: {
+    name: 'orth',
+  },
+})
+
+const flowPolylineRound = Shape.Edge.define({
+  attrs: {
+    line: {
+      radius: 10,
+      offset: 30,
+      endArrow: true,
+      stroke: '#F6BD16'
+    }
+  },
+  connector: 'rounded',
+  router: {
+    name: 'orth',
+  },
+})
+const flowSmooth = Shape.Edge.define({
+  attrs: {
+    line: {
+      radius: 10,
+      offset: 30,
+      endArrow: true,
+      stroke: '#F6BD16'
+    }
+  },
+  connector: 'smooth',
+})
+
+export { flowEdge, flowPolyline, flowPolylineRound, flowSmooth }

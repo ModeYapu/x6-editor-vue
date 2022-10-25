@@ -148,12 +148,7 @@ export default {
                         radius: 50,
                     }, // 自动吸附
                     // router: {
-                    //     // 布局方式
-                    //     name: 'er',
-                    //     args: {
-                    //         offset: 'center',
-                    //         direction: 'V',
-                    //     },
+                    //     name: 'orth',
                     // }
                 }
             });
