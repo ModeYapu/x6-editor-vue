@@ -1,24 +1,52 @@
 <template>
     <div class="context-props">
-        <div v-if="ChoiceType==='node'">
-            <h3>节点</h3>
-            <div id="node-prop">
-                Label: <input type="text" v-model="nodeArgs.label" @change="labelChange('label')" /> <br />
-                Id: <input type="text" v-model="nodeArgs.stateId" @change="labelChange('stateId')" /> <br />
-                Type: <input type="text" v-model="nodeArgs.stateType" @change="labelChange('stateType')" /> <br />
-                Props: <textarea type="text" v-model="nodeArgs.stateProps" @change="labelChange('stateProps')" />
+        <div v-if="ChoiceType === 'node'">
+            <div class="title">节点</div>
+            <div class="from-content">
+                <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+                    <a-form-item label="Label">
+                        <a-input v-model="nodeArgs.label" @change="onChange('label')" />
+                    </a-form-item>
+                    <a-form-item label="Id">
+                        <a-input v-model="nodeArgs.stateId" @change="onChange('stateId')" />
+                    </a-form-item>
+                    <a-form-item label="Type">
+                        <a-input v-model="nodeArgs.stateType" @change="onChange('stateType')" readOnly />
+                    </a-form-item>
+                    <a-form-item label="Props">
+                        <a-textarea :rows="12" v-model="nodeArgs.stateProps" @change="onChange('stateProps')" />
+                    </a-form-item>
+                </a-form>
             </div>
         </div>
-        <div v-if="ChoiceType==='edge'">
-            <h3>边</h3>
-            <div id="node-prop">
-                Label: <input type="text" v-model="nodeArgs.label" @change="labelChange('label')" /> <br />
-                Id: <input type="text" v-model="nodeArgs.stateId" @change="labelChange('stateId')" /> <br />
-                Type: <input type="text" v-model="nodeArgs.stateType" @change="labelChange('stateType')" /> <br />
-                Props: <textarea type="text" v-model="nodeArgs.stateProps" @change="labelChange('stateProps')" />
+        <div v-if="ChoiceType === 'edge'">
+            <div class="title">边</div>
+            <div class="from-content">
+                <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+                    <a-form-item label="Label">
+                        <a-input v-model="nodeArgs.label" @change="onChange('label')" />
+                    </a-form-item>
+                    <a-form-item label="Shape">
+                        <a-select v-model="nodeArgs.edgeShape" @change="handleSelectChange">
+                            <a-select-option value="flow-smooth">
+                                Smooth
+                            </a-select-option>
+                            <a-select-option value="flow-polyline">
+                                Polyline
+                            </a-select-option>
+                            <a-select-option value="flow-polyline-round">
+                                Polyline Round
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                    <a-form-item label="Props">
+                        <a-textarea :rows="12" v-model="nodeArgs.stateProps" @change="onChange('stateProps')" />
+                    </a-form-item>
+
+                </a-form>
             </div>
         </div>
-        <div v-if="ChoiceType==='blank'">
+        <div v-if="ChoiceType === 'blank'">
 
         </div>
     </div>
@@ -36,13 +64,16 @@ export default {
     props: ['point'],
     data() {
         return {
+            formLayout: 'horizontal',
+            form: this.$form.createForm(this, { name: 'coordinated' }),
             params: {},
             ChoiceType: '',
             nodeArgs: {
                 label: '',
                 stateId: '',
                 stateType: '',
-                stateProps: ''
+                stateProps: '',
+                edgeShape: ''
             },
         }
     },
@@ -67,16 +98,17 @@ export default {
             } else {
                 this.nodeArgs = {
                     label: params.edge.store.data.labels ? params.edge.store.data.labels[0].attrs.text.text : '',
-                    stateProps: JSON.stringify(params.edge.store.data.stateProps, null, 2)
+                    stateProps: params.edge.store.data.stateProps ? JSON.stringify(params.edge.store.data.stateProps, null, 2) : '',
+                    edgeShape: params.edge.store.data.shape
                 }
             }
         })
     },
 
     methods: {
-        labelChange(fromType) {
+        onChange(fromType) {
             let cells = this.graph.getSelectedCells()
-            console.log('labelChange', cells, fromType)
+            console.log('onChange', cells, fromType)
             if (this.ChoiceType === 'node') {
                 if (fromType === 'label') {
                     cells[0].setAttrs({
@@ -99,9 +131,12 @@ export default {
                 } else {
                     cells[0].setProp(fromType, fromType === 'stateProps' ? JSON.parse(this.nodeArgs[fromType]) : this.nodeArgs[fromType])
                 }
-
             }
-            this.ChoiceType = ''
+            // this.ChoiceType = ''
+        },
+        handleSelectChange(value) {
+            let cells = this.graph.getSelectedCells()
+            cells[0].setProp('shape', value)
         },
     }
 }
@@ -109,6 +144,19 @@ export default {
 </script>
 <style lang='less' scoped>
 .context-props {
-    width: 300px;
+    width: 100%;
+
+    .title {
+        padding: 8px 16px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        border-bottom: 1px solid #e8e8e8;
+        background: #fafafa;
+    }
+
+    .from-content {
+        padding: 12px;
+    }
 }
 </style>

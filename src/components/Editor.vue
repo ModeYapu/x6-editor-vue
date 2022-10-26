@@ -13,8 +13,12 @@
                 <CodeMirror :code='DataJson' @code="codeChange" />
             </div>
             <div id="x6-props-minimap" v-if="!ShowJsonViewer">
-                <ContextProps />
-                <div id="minimap-container"></div>
+                <ContextProps class="context-props" />
+                <div class="minimap">
+                    <div class="minimap-title">小地图</div>
+                    <div id="minimap-container"></div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -30,9 +34,9 @@ import ContextMenu from './ContextMenu.vue'
 import ContextProps from './ContextPorps/index.vue'
 import ToolbarButton from './EditorToolbar/ToolbarButton.vue';
 import { eventResigner } from './event'
-
 import { exportJson, importJson } from '../utils/utils'
 import Vue from 'vue';
+
 export default {
     components: {
         CodeMirror,
@@ -189,7 +193,6 @@ export default {
             this.graph.scaleContentToFit(options)
         },
         showJson() {
-            // this.key += 1        
             this.ShowJsonViewer = true
             this.removeEventListener()
             const jsonStr = JSON.stringify(exportJson(this.graph.toJSON()))
@@ -198,7 +201,7 @@ export default {
         },
         codeChange(params) {
             this.codeChangeJson = importJson(JSON.parse(params))
-            localStorage.setItem('codeChangeJson', JSON.stringify(this.codeChangeJson))
+            // localStorage.setItem('codeChangeJson', JSON.stringify(this.codeChangeJson))
         },
         showDesigner() {
 
@@ -263,6 +266,7 @@ export default {
 <style lang='less' scoped>
 .x6-wrapper {
     display: flex;
+    height: calc(100vh - 43px);
 }
 
 #x6-slider {
@@ -283,6 +287,32 @@ export default {
 }
 
 #x6-props-minimap {
-    width: 248px;
+    width: 20%;
+    height: calc(100vh - 43px);
+    display: flex;
+    border-left: 1px solid #e8e8e8;
+    flex-direction: column;
+
+    .context-props {
+        flex: 1;
+        background: #fafafa;
+    }
+
+    .minimap {
+        .minimap-title {
+            padding: 8px 16px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            border-bottom: 1px solid #e8e8e8;
+            background: #fafafa;
+        }
+
+        #minimap-container {
+            height: 220px;
+        }
+    }
+
+
 }
 </style>
