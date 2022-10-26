@@ -112,8 +112,45 @@ function detailImportEdge(edge) {
     return obj
 }
 
+/**
+* @description:
+* @param {Object} data json对象
+* @param {String} file 文件名
+* @return:
+*/
+const saveJSON = (data, filename) => {
+    if (!data) {
+        alert("保存的数据为空");
+        return;
+    }
+    if (!filename) filename = "json.json";
+    if (typeof data === "object") {
+        data = JSON.stringify(data, undefined, 4);
+    }
+    // 要创建一个 blob 数据
+    let blob = new Blob([data], { type: "text/json" }),
+        a = document.createElement("a");
+    a.download = filename;
+
+    // 将blob转换为地址
+    // 创建 URL 的 Blob 对象
+    a.href = window.URL.createObjectURL(blob);
+    console.log(blob, "链接", a.href);
+
+    // 标签 data- 嵌入自定义属性  屏蔽后也可正常下载
+    a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+    console.log(a, "dataset", a.dataset.downloadurl);
+
+    // 添加鼠标事件
+    let event = new MouseEvent("click", {});
+    console.log("事件", event);
+
+    // 向一个指定的事件目标派发一个事件
+    a.dispatchEvent(event);
+}
 
 export {
     exportJson,
-    importJson
+    importJson,
+    saveJSON
 }

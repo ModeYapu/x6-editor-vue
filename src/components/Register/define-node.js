@@ -61,6 +61,7 @@ const flowRect = Shape.Rect.define({
             rx: 10
         }
     },
+    type: 'node',
     ...portProps
 })
 
@@ -75,6 +76,7 @@ const flowCircle = Shape.Circle.define({
             rx: 10
         }
     },
+    type: 'node',
     ...portProps
 })
 
@@ -89,6 +91,7 @@ const flowPolygon = Shape.Polygon.define({
             fillRule: 'nonzero',
         }
     },
+    type: 'node',
     points: '0,10 10,0 20,10 10,20',
     ...portProps
 })
@@ -104,6 +107,7 @@ const flowEllipse = Shape.Ellipse.define({
             rx: 10
         }
     },
+    type: 'node',
     ...portProps
 })
 

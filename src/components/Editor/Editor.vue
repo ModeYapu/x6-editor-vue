@@ -18,7 +18,6 @@
                     <div class="minimap-title">小地图</div>
                     <div id="minimap-container"></div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -26,15 +25,16 @@
 
 <script>
 import { Graph } from '@antv/x6';
-import data from './data'
-import './Register/index'
-import { stencilInit } from './Stencil/Stencil'
-import CodeMirror from './CodeMirror.vue'
-import ContextMenu from './ContextMenu.vue'
-import ContextProps from './ContextPorps/index.vue'
-import ToolbarButton from './EditorToolbar/ToolbarButton.vue';
-import { eventResigner } from './event'
-import { exportJson, importJson } from '../utils/utils'
+import '../Register/index'
+import { stencilInit } from '../Stencil/Stencil'
+import CodeMirror from '../CodeMirror.vue'
+import ContextMenu from '../ContextMenu.vue'
+import ContextProps from '../ContextPorps/index.vue'
+import ToolbarButton from '../EditorToolbar/ToolbarButton.vue';
+import { eventResigner } from '../event'
+import { exportJson, importJson } from '../../utils/utils'
+import methods from './methods';
+// import { bindKey } from '../bindKey'
 import Vue from 'vue';
 
 export default {
@@ -57,16 +57,14 @@ export default {
             key: 0
         }
     },
-
-
     computed: {},
 
     mounted() {
         this.graphInit()
-        this.graph.fromJSON(importJson(data))
     },
 
     methods: {
+        ...methods,
         graphInit() {
             this.graph = new Graph({
                 container: document.getElementById('x6-container'),
@@ -137,20 +135,41 @@ export default {
 
             eventResigner(this.graph)
 
-
             this.history = this.graph.history
+            this.$nextTick(() => {
+                this.graph.bindKey('ctrl+c', () => {
+                    methods.copyCells()
+                })
+
+                this.graph.bindKey('ctrl+v', () => {
+                    methods.pasteCells()
+                })
+
+                // 删除
+                this.graph.bindKey('delete', () => {
+                    methods.deleteCells()
+                })
+                this.graph.bindKey('backspace', () => {
+                    methods.deleteCells()
+                })
+
+                // 保存
+                this.graph.bindKey('ctrl+s', () => {
+                    methods.save()
+                })
+
+                // 撤销 重做
+                this.graph.bindKey('ctrl+z', () => {
+                    methods.onUndo()
+                })
+                this.graph.bindKey('ctrl+shift+z', () => {
+                    methods.onRedo()
+                })
+            })
 
             this.history.on('change', () => {
                 this.state.canRedo = this.history.canRedo()
                 this.state.canUndo = this.history.canUndo()
-            })
-
-            this.graph.bindKey('ctrl+c', () => {
-                this.copyCells()
-            })
-
-            this.graph.bindKey('ctrl+v', () => {
-                this.pasteCells()
             })
             this.docAddEventListener()
         },
@@ -165,29 +184,7 @@ export default {
         removeEventListener() {
             document.removeEventListener('mousedown', this.switchPanning)
         },
-        onUndo() {
-            this.history.undo()
-        },
 
-        onRedo() {
-            this.history.redo()
-        },
-
-        save() {
-            const gData = this.graph.toJSON()
-            console.log('gData', gData)
-            exportJson(gData)
-
-            console.log('exportJson', exportJson(gData))
-        },
-
-        fitToContent() {
-            this.graph.fitToContent({
-                minWidth: this.graph.options.width,
-                minHeight: this.graph.options.height,
-                padding: 10,
-            })
-        },
 
         scaleContentToFit(options = {}) {
             this.graph.scaleContentToFit(options)
@@ -201,10 +198,8 @@ export default {
         },
         codeChange(params) {
             this.codeChangeJson = importJson(JSON.parse(params))
-            // localStorage.setItem('codeChangeJson', JSON.stringify(this.codeChangeJson))
         },
         showDesigner() {
-
             this.ShowJsonViewer = false
             this.$nextTick(() => {
                 this.graphInit()
@@ -214,51 +209,6 @@ export default {
             })
         },
 
-        toFront() {
-            let cells = this.graph.getSelectedCells()
-            cells.forEach(item => {
-                item.toFront()
-            });
-        },
-        toBack() {
-            let cells = this.graph.getSelectedCells()
-            cells.forEach(item => {
-                item.toBack()
-            });
-        },
-        copyCells() {
-            const cells = this.graph.getSelectedCells()
-            if (cells.length) {
-                this.graph.copy(cells)
-            }
-            return false
-        },
-        pasteCells(offset = { dx: 32, dy: 32 }) {
-            if (!this.graph.isClipboardEmpty()) {
-                const cells = this.graph.paste({ offset: offset })
-                this.graph.cleanSelection()
-                this.graph.select(cells)
-            }
-            return false
-        },
-        deleteCells() {
-            const cells = this.graph.getSelectedCells()
-            if (cells.length) {
-                cells.forEach(it => { it.remove() })
-            }
-            return false
-        },
-        zoonIn() {
-            this.graph.zoom(-0.2)
-        },
-        zoonOut() {
-            this.graph.zoom(0.2)
-        },
-        multiple() {
-            this.graph.disablePanning()
-            this.graph.enableMultipleSelection()
-            this.graph.enableRubberband()
-        }
     }
 }
 

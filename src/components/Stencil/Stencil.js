@@ -65,20 +65,20 @@ export const stencilInit = (graph) => {
             "Retry": []
         },
     })
-    const ScriptTask = graph.createNode({
-        shape: 'flow-rect',
-        width: 110,
-        height: 48,
-        attrs: {
-            body: {
-                fill: '#13C2C2',
-                stroke: '#acebe8',
-                lineWidth: 2,
-                rx: 10
-            }
-        },
-        label: 'ScriptTask',
-    })
+    // const ScriptTask = graph.createNode({
+    //     shape: 'flow-rect',
+    //     width: 110,
+    //     height: 48,
+    //     attrs: {
+    //         body: {
+    //             fill: '#13C2C2',
+    //             stroke: '#acebe8',
+    //             lineWidth: 2,
+    //             rx: 10
+    //         }
+    //     },
+    //     label: 'ScriptTask',
+    // })
 
     const Choice = graph.createNode({
         shape: 'flow-rhombus',
@@ -98,20 +98,20 @@ export const stencilInit = (graph) => {
         "stateProps": '',
     })
 
-    const Compensation = graph.createNode({
-        shape: 'flow-rect',
-        width: 110,
-        height: 48,
-        attrs: {
-            body: {
-                fill: '#722ED1',
-                stroke: '#acebe8',
-                lineWidth: 2,
-                rx: 10
-            }
-        },
-        label: 'Compensation',
-    })
+    // const Compensation = graph.createNode({
+    //     shape: 'flow-rect',
+    //     width: 110,
+    //     height: 48,
+    //     attrs: {
+    //         body: {
+    //             fill: '#722ED1',
+    //             stroke: '#acebe8',
+    //             lineWidth: 2,
+    //             rx: 10
+    //         }
+    //     },
+    //     label: 'Compensation',
+    // })
 
     const Succeed = graph.createNode({
         shape: 'flow-circle',
@@ -131,21 +131,21 @@ export const stencilInit = (graph) => {
         "stateProps": '',
     })
 
-    const Fail = graph.createNode({
-        shape: 'flow-circle',
-        width: 72,
-        height: 72,
-        attrs: {
-            body: {
-                fill: 'red',
-                stroke: 'rgba(250, 140, 22, 1)',
-                lineWidth: 2,
-                rx: 10
-            }
-        },
-        label: 'Fail',
-    })
+    // const Fail = graph.createNode({
+    //     shape: 'flow-circle',
+    //     width: 72,
+    //     height: 72,
+    //     attrs: {
+    //         body: {
+    //             fill: 'red',
+    //             stroke: 'rgba(250, 140, 22, 1)',
+    //             lineWidth: 2,
+    //             rx: 10
+    //         }
+    //     },
+    //     label: 'Fail',
+    // })
 
-    stencil.load([Start, ServiceTask, ScriptTask, Choice, Compensation, Succeed, Fail], 'group1')
+    stencil.load([Start, ServiceTask, Choice, Succeed], 'group1')
 }
 
