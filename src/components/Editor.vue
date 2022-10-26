@@ -6,15 +6,15 @@
             @showJson="showJson" @showDesigner="showDesigner" @save="save" />
         <ContextMenu @onUndo='onUndo' @onRedo="onRedo" @copyCells='copyCells' @pasteCells="pasteCells"
             @deleteCells='deleteCells' />
-        <div class="x6-wrapper">
+        <div class="x6-wrapper" :key="key">
             <div id="x6-slider"></div>
             <div v-show="!ShowJsonViewer" id="x6-container"></div>
             <div v-show="ShowJsonViewer" id="json-view-container">
                 <CodeMirror :code='DataJson' @code="codeChange" />
             </div>
-            <div>
+            <div id="x6-props-minimap" v-if="!ShowJsonViewer">
                 <ContextProps />
-                <div id="minimap-container" v-if="!ShowJsonViewer"></div>
+                <div id="minimap-container"></div>
             </div>
         </div>
     </div>
@@ -49,7 +49,8 @@ export default {
             },
             ShowJsonViewer: false,
             DataJson: '',
-            copyCellPoint: {}
+            copyCellPoint: {},
+            key: 0
         }
     },
 
@@ -62,7 +63,6 @@ export default {
     },
 
     methods: {
-
         graphInit() {
             this.graph = new Graph({
                 container: document.getElementById('x6-container'),
@@ -135,6 +135,7 @@ export default {
 
 
             this.history = this.graph.history
+
             this.history.on('change', () => {
                 this.state.canRedo = this.history.canRedo()
                 this.state.canUndo = this.history.canUndo()
@@ -147,12 +148,18 @@ export default {
             this.graph.bindKey('ctrl+v', () => {
                 this.pasteCells()
             })
-
-            document.addEventListener('mousedown', () => {
-                this.graph.enablePanning()
-                this.graph.disableMultipleSelection()
-                this.graph.disableRubberband()
-            })
+            this.docAddEventListener()
+        },
+        docAddEventListener() {
+            document.addEventListener('mousedown', this.switchPanning)
+        },
+        switchPanning() {
+            this.graph.enablePanning()
+            this.graph.disableMultipleSelection()
+            this.graph.disableRubberband()
+        },
+        removeEventListener() {
+            document.removeEventListener('mousedown', this.switchPanning)
         },
         onUndo() {
             this.history.undo()
@@ -182,19 +189,19 @@ export default {
             this.graph.scaleContentToFit(options)
         },
         showJson() {
+            // this.key += 1        
             this.ShowJsonViewer = true
+            this.removeEventListener()
             const jsonStr = JSON.stringify(exportJson(this.graph.toJSON()))
             this.DataJson = JSON.stringify(JSON.parse(jsonStr), null, 2)
+            this.graph.dispose()
         },
         codeChange(params) {
             this.codeChangeJson = importJson(JSON.parse(params))
-            try {
-                console.log('codeChange', importJson(JSON.parse(params)))
-            } catch (error) {
-                console.log('codeChangeerror', error)
-            }
+            localStorage.setItem('codeChangeJson', JSON.stringify(this.codeChangeJson))
         },
         showDesigner() {
+
             this.ShowJsonViewer = false
             this.$nextTick(() => {
                 this.graphInit()
@@ -216,7 +223,6 @@ export default {
                 item.toBack()
             });
         },
-
         copyCells() {
             const cells = this.graph.getSelectedCells()
             if (cells.length) {
@@ -274,5 +280,9 @@ export default {
 #x6-container {
     height: 100vh !important;
     flex: 1;
+}
+
+#x6-props-minimap {
+    width: 248px;
 }
 </style>

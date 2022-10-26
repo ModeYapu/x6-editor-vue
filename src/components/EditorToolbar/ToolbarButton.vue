@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div>
+  <div class="tool-bar">
     <button @click="$emit('onUndo')">
       <IconFont type="icon-undo"></IconFont>
     </button>
@@ -39,7 +39,7 @@
     </button>
 
     <button @click="$emit('multiple')">
-      <IconFont type="multi-select"></IconFont>
+      <IconFont type="icon-multi-select"></IconFont>
     </button>
     |
     <button @click="() => {
@@ -53,7 +53,7 @@
       <IconFontExt type="icondesign"></IconFontExt>
     </button>
     |
-    <button @click="save">save</button>
+    <button @click="$emit('save')">save</button>
   </div>
 </template>
 
@@ -61,7 +61,7 @@
 import { Icon } from 'ant-design-vue'
 
 const IconFont = Icon.createFromIconfontCN({
-  scriptUrl: require('../../assets/font_1518433_oa5sw7ezue.js'),
+  scriptUrl: 'https://at.alicdn.com/t/font_1101588_01zniftxm9yp.js',
 })
 
 const IconFontExt = Icon.createFromIconfontCN({
@@ -88,5 +88,19 @@ export default {
 
 </script>
 <style lang='less' scoped>
+.tool-bar {
+  padding: 8px;
+  border: 1px solid #e6e9ed;
 
+  button {
+    background: #fff;
+    border: 1px solid #fff;
+    margin: 0 6px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    border: 1px solid #e6e9ed;
+  }
+}
 </style>
