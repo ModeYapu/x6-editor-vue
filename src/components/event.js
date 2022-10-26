@@ -30,7 +30,10 @@ export const eventResigner = (graph) => {
         console.log('select args', args)
         EventBus.$emit('selectParams', { ...args, type: 'edge' })
     })
-
+    
+    graph.on('blank:click',(args)=>{
+        EventBus.$emit('selectParams', { ...args, type: '' })
+    })
 
 
     graph.on('cell:contextmenu', ({ e, x, y, cell, view }) => {

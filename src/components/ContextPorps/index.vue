@@ -85,7 +85,6 @@ export default {
 
     mounted() {
         EventBus.$on('selectParams', (params) => {
-            console.log('selectParams', params)
             this.ChoiceType = params.type
             if (params.type === 'node') {
                 this.nodeArgs = {
@@ -95,7 +94,7 @@ export default {
                     stateProps: JSON.stringify(params.node.store.data.stateProps, null, 2),
                 }
 
-            } else {
+            } else if (params.type === 'edge') {
                 this.nodeArgs = {
                     label: params.edge.store.data.labels ? params.edge.store.data.labels[0].attrs.text.text : '',
                     stateProps: params.edge.store.data.stateProps ? JSON.stringify(params.edge.store.data.stateProps, null, 2) : '',
@@ -112,8 +111,8 @@ export default {
             if (this.ChoiceType === 'node') {
                 if (fromType === 'label') {
                     cells[0].setAttrs({
-                        // body: { fill: '#faad14' },
                         label: { text: this.nodeArgs.label },
+                        text: { text: this.nodeArgs.label }
                     })
                 } else {
                     cells[0].setProp(fromType, fromType === 'stateProps' ? JSON.parse(this.nodeArgs[fromType]) : this.nodeArgs[fromType])
@@ -121,18 +120,17 @@ export default {
 
             } else {
                 if (fromType === 'label') {
-                    cells[0].appendLabel({
+                    cells[0].setLabels([{
                         attrs: {
                             text: {
                                 text: this.nodeArgs.label,
                             },
                         },
-                    })
+                    }])
                 } else {
                     cells[0].setProp(fromType, fromType === 'stateProps' ? JSON.parse(this.nodeArgs[fromType]) : this.nodeArgs[fromType])
                 }
             }
-            // this.ChoiceType = ''
         },
         handleSelectChange(value) {
             let cells = this.graph.getSelectedCells()

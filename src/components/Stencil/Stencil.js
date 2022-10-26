@@ -2,7 +2,7 @@ import { Addon } from '@antv/x6';
 
 export const stencilInit = (graph) => {
     const stencil = new Addon.Stencil({
-        groups: [{ name: 'group1', title: '服务器' }],
+        groups: [{ name: 'group1', title: '模块' }],
         layoutOptions: {
             columns: 1,
             columnWidth: 200,
