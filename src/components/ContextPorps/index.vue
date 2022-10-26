@@ -137,6 +137,18 @@ export default {
         handleSelectChange(value) {
             let cells = this.graph.getSelectedCells()
             cells[0].setProp('shape', value)
+            cells[0].removeRouter()
+            this.$nextTick(() => {
+                if (value === 'flow-polyline') {
+                    cells[0].setRouter('orth')
+                    cells[0].setConnector('normal')
+                } else if (value === 'flow-polyline-round') {
+                    cells[0].setRouter('orth')
+                    cells[0].setConnector('rounded')
+                } else if (value === 'flow-smooth') {
+                    cells[0].setConnector('smooth')
+                }
+            })
         },
     }
 }
