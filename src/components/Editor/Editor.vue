@@ -8,9 +8,9 @@
             @deleteCells='deleteCells' />
         <div class="x6-wrapper" :key="key">
             <div id="x6-slider"></div>
-            <div v-show="!ShowJsonViewer" id="x6-container"></div>
-            <div v-show="ShowJsonViewer" id="json-view-container">
-                <CodeMirror :code='DataJson' @code="codeChange" />
+            <div v-if="!ShowJsonViewer" id="x6-container"></div>
+            <div v-if="ShowJsonViewer" id="json-view-container">
+                <CodeMirror :code.sync='DataJson' @code="codeChange" />
             </div>
             <div id="x6-props-minimap" v-if="!ShowJsonViewer">
                 <ContextProps class="context-props" />
@@ -191,21 +191,24 @@ export default {
         },
         showJson() {
             this.ShowJsonViewer = true
-            this.removeEventListener()
+            // this.removeEventListener()
             const jsonStr = JSON.stringify(exportJson(this.graph.toJSON()))
             this.DataJson = JSON.stringify(JSON.parse(jsonStr), null, 2)
-            this.graph.dispose()
+            // this.graph.dispose()
         },
         codeChange(params) {
+            console.log('codeChange params', params, this.DataJson)
             this.codeChangeJson = importJson(JSON.parse(params))
+
         },
         showDesigner() {
             this.ShowJsonViewer = false
             this.$nextTick(() => {
-                this.graphInit()
-                this.$nextTick(() => {
-                    this.graph.fromJSON(this.codeChangeJson)
-                })
+                //     this.graphInit()
+                // this.$nextTick(() => {
+                console.log('codeChangeJson', this.codeChangeJson)
+                this.codeChangeJson && this.graph.fromJSON(this.codeChangeJson)
+                // })
             })
         },
 
