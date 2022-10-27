@@ -1,33 +1,31 @@
-import methods from "./Editor/methods"
-
-export const bindKey = (graph) => {
+export const bindKey = (graph, that) => {
     // 复制粘贴
     graph.bindKey('ctrl+c', () => {
-        methods.copyCells()
+        that.copyCells()
     })
 
     graph.bindKey('ctrl+v', () => {
-        methods.pasteCells()
+        that.pasteCells()
     })
 
     // 删除
     graph.bindKey('delete', () => {
-        methods.deleteCells()
+        that.deleteCells()
     })
     graph.bindKey('backspace', () => {
-        methods.deleteCells()
+        that.deleteCells()
     })
 
     // 保存
     graph.bindKey('ctrl+s', () => {
-        methods.save()
+        that.save()
     })
 
     // 撤销 重做
     graph.bindKey('ctrl+z', () => {
-        methods.onUndo()
+        that.onUndo()
     })
     graph.bindKey('ctrl+shift+z', () => {
-        methods.onRedo()
+        that.onRedo()
     })
 }

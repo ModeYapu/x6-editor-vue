@@ -34,7 +34,7 @@ import ToolbarButton from '../EditorToolbar/ToolbarButton.vue';
 import { eventResigner } from '../event'
 import { exportJson, importJson } from '../../utils/utils'
 import methods from './methods';
-// import { bindKey } from '../bindKey'
+import { bindKey } from '../bindKey'
 import Vue from 'vue';
 
 export default {
@@ -136,37 +136,9 @@ export default {
             eventResigner(this.graph)
 
             this.history = this.graph.history
-            this.$nextTick(() => {
-                this.graph.bindKey('ctrl+c', () => {
-                    methods.copyCells()
-                })
-
-                this.graph.bindKey('ctrl+v', () => {
-                    methods.pasteCells()
-                })
-
-                // 删除
-                this.graph.bindKey('delete', () => {
-                    methods.deleteCells()
-                })
-                this.graph.bindKey('backspace', () => {
-                    methods.deleteCells()
-                })
-
-                // 保存
-                this.graph.bindKey('ctrl+s', () => {
-                    methods.save()
-                })
-
-                // 撤销 重做
-                this.graph.bindKey('ctrl+z', () => {
-                    methods.onUndo()
-                })
-                this.graph.bindKey('ctrl+shift+z', () => {
-                    methods.onRedo()
-                })
-            })
-
+            
+            bindKey(this.graph, this)
+            
             this.history.on('change', () => {
                 this.state.canRedo = this.history.canRedo()
                 this.state.canUndo = this.history.canUndo()
@@ -184,11 +156,6 @@ export default {
         removeEventListener() {
             document.removeEventListener('mousedown', this.switchPanning)
         },
-
-
-        scaleContentToFit(options = {}) {
-            this.graph.scaleContentToFit(options)
-        },
         showJson() {
             this.ShowJsonViewer = true
             // this.removeEventListener()
@@ -199,22 +166,15 @@ export default {
         codeChange(params) {
             console.log('codeChange params', params, this.DataJson)
             this.codeChangeJson = importJson(JSON.parse(params))
-
         },
         showDesigner() {
             this.ShowJsonViewer = false
             this.$nextTick(() => {
-                //     this.graphInit()
-                // this.$nextTick(() => {
-                console.log('codeChangeJson', this.codeChangeJson)
                 this.codeChangeJson && this.graph.fromJSON(this.codeChangeJson)
-                // })
             })
-        },
-
+        }
     }
 }
-
 </script>
 <style lang='less' scoped>
 .x6-wrapper {

@@ -19,6 +19,9 @@ function fitToContent() {
         padding: 10,
     })
 }
+function scaleContentToFit(options = {}) {
+    this.graph.scaleContentToFit(options)
+}
 function toFront() {
     let cells = this.graph.getSelectedCells()
     cells.forEach(item => {
@@ -66,5 +69,5 @@ function multiple() {
 }
 
 export default {
-    onUndo, onRedo, save, fitToContent, toFront, toBack, copyCells, pasteCells, deleteCells, zoonIn, zoonOut, multiple
+    onUndo, onRedo, save, scaleContentToFit, fitToContent, toFront, toBack, copyCells, pasteCells, deleteCells, zoonIn, zoonOut, multiple
 }
