@@ -54,8 +54,6 @@
 <script>
 import { EventBus } from "../../eventBus";
 
-
-
 export default {
     components: {
 

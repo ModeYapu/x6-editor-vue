@@ -6,9 +6,9 @@ EventBus.$on('selectionChanged', (params) => {
     const added = params.added
     const removed = params.removed
     const selected = params.selected
-    console.log('selected', added, removed, selected, CellType)
     detailAdded(added)
     detailRemoved(removed)
+    EventBus.$emit('hasSelected', selected)
 })
 
 function detailAdded(cells) {
