@@ -8,7 +8,6 @@ function onRedo() {
 }
 function save() {
     const gData = this.graph.toJSON()
-    // exportJson(gData)
     saveJSON(exportJson(gData))
 }
 

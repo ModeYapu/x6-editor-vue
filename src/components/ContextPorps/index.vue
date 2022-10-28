@@ -4,16 +4,16 @@
             <div class="title">节点</div>
             <div class="from-content">
                 <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
-                    <a-form-item label="Label">
+                    <a-form-item label="标签">
                         <a-input v-model="nodeArgs.label" @change="onChange('label')" />
                     </a-form-item>
                     <a-form-item label="Id">
                         <a-input v-model="nodeArgs.stateId" @change="onChange('stateId')" />
                     </a-form-item>
-                    <a-form-item label="Type">
+                    <a-form-item label="类型">
                         <a-input v-model="nodeArgs.stateType" @change="onChange('stateType')" readOnly />
                     </a-form-item>
-                    <a-form-item label="Props">
+                    <a-form-item label="属性">
                         <a-textarea :rows="12" v-model="nodeArgs.stateProps" @change="onChange('stateProps')" />
                     </a-form-item>
                 </a-form>
@@ -23,10 +23,10 @@
             <div class="title">边</div>
             <div class="from-content">
                 <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
-                    <a-form-item label="Label">
+                    <a-form-item label="标签">
                         <a-input v-model="nodeArgs.label" @change="onChange('label')" />
                     </a-form-item>
-                    <a-form-item label="Shape">
+                    <a-form-item label="形状">
                         <a-select v-model="nodeArgs.edgeShape" @change="handleSelectChange">
                             <a-select-option value="flow-smooth">
                                 Smooth
@@ -39,10 +39,9 @@
                             </a-select-option>
                         </a-select>
                     </a-form-item>
-                    <a-form-item label="Props">
+                    <a-form-item label="属性">
                         <a-textarea :rows="12" v-model="nodeArgs.stateProps" @change="onChange('stateProps')" />
                     </a-form-item>
-
                 </a-form>
             </div>
         </div>
