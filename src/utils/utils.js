@@ -154,6 +154,12 @@ export const CellType = (cell) => {
     return Object.prototype.toString.call(cell) === '[object X6.Node]' ? 'node' : 'edge'
 }
 
+export const showPorts = (node, show) => {
+    node.getPorts().forEach(element => {
+        node.setPortProp(element, ['attrs', 'circle'], { visibility: show ? 'visible' : 'hidden' })
+    });
+}
+
 export {
     exportJson,
     importJson,

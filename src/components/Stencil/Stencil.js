@@ -148,5 +148,6 @@ export const stencilInit = (graph) => {
     // })
 
     stencil.load([Start, ServiceTask, Choice, Succeed], 'group1')
+
 }
 

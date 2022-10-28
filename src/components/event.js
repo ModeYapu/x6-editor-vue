@@ -1,16 +1,14 @@
 
 import { EventBus } from "../eventBus";
-import { CellType } from '../utils/utils'
+import { CellType, showPorts } from '../utils/utils'
 
 export const eventResigner = (graph) => {
     graph.on('node:selected', (args) => {
         // code here
-        // console.log('select args', args)
         EventBus.$emit('selectParams', { ...args, type: 'node' })
     })
     graph.on('edge:selected', (args) => {
         // code here
-        console.log('select args', args)
         EventBus.$emit('selectParams', { ...args, type: 'edge' })
     })
 
@@ -30,5 +28,14 @@ export const eventResigner = (graph) => {
 
     graph.on('selection:changed', (args) => {
         EventBus.$emit('selectionChanged', args)
+    })
+
+    // x6-node-selected
+    graph.on('node:mouseenter', ({ node }) => {
+        showPorts(node, true)
+    })
+
+    graph.on('node:mouseleave', ({ node }) => {
+        showPorts(node, false)
     })
 }

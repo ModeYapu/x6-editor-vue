@@ -1,8 +1,8 @@
 <template>
     <div>
-        <ToolbarButton :historyState="state" @onUndo='onUndo' @onRedo="onRedo" @copyCells='copyCells' @pasteCells="pasteCells"
-            @deleteCells='deleteCells' @zoonIn="zoonIn" @zoonOut="zoonOut" @toFront="toFront" @toBack="toBack"
-            @fitToContent="fitToContent" @scaleContentToFit="scaleContentToFit" @multiple="multiple"
+        <ToolbarButton :historyState="state" @onUndo='onUndo' @onRedo="onRedo" @copyCells='copyCells'
+            @pasteCells="pasteCells" @deleteCells='deleteCells' @zoonIn="zoonIn" @zoonOut="zoonOut" @toFront="toFront"
+            @toBack="toBack" @fitToContent="fitToContent" @scaleContentToFit="scaleContentToFit" @multiple="multiple"
             @showJson="showJson" @showDesigner="showDesigner" @save="save" />
         <ContextMenu @onUndo='onUndo' @onRedo="onRedo" @copyCells='copyCells' @pasteCells="pasteCells"
             @deleteCells='deleteCells' />

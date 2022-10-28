@@ -44,7 +44,8 @@ const portProps = {
                 magnet: true,
                 stroke: '#1890ff',
                 strokeWidth: 2,
-                fill: '#fff'
+                fill: '#fff',
+                visibility:'hidden'
             },
         }
     ],

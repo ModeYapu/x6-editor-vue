@@ -1,5 +1,5 @@
 import { EventBus } from "../../eventBus";
-import { CellType } from '../../utils/utils'
+import { CellType, showPorts } from '../../utils/utils'
 import { ColorConfig } from '../Register/colorConfig'
 
 EventBus.$on('selectionChanged', (params) => {
@@ -17,6 +17,7 @@ function detailAdded(cells) {
             cell.setAttrs({
                 body: { fill: ColorConfig[cell.getProp('stateType')].color },
             })
+            showPorts(cell, true)
         } else {
             cell.setAttrs({
                 line: { stroke: '#b64ee1', strokeWidth: 4 },
@@ -31,6 +32,7 @@ function detailRemoved(cells) {
             cell.setAttrs({
                 body: { fill: ColorConfig[cell.getProp('stateType')].fill },
             })
+            showPorts(cell, false)
         } else {
             cell.setAttrs({
                 line: { stroke: '#F6BD16', strokeWidth: 2 },
