@@ -22,8 +22,8 @@ export const stencilInit = (graph) => {
         height: 72,
         attrs: {
             body: {
-                fill: '#fcd494',
-                stroke: 'rgba(250, 140, 22, 1)',
+                fill: '#fff3ea',  // #fdd594
+                stroke: '#ffc26d',
                 lineWidth: 2,
                 rx: 10
             }
@@ -45,8 +45,8 @@ export const stencilInit = (graph) => {
         height: 48,
         attrs: {
             body: {
-                fill: '#1890FF',
-                stroke: '#a8dbff',
+                fill: '#e8f8ff',  // #94d4fc
+                stroke: '#1890ff',
                 lineWidth: 2,
                 rx: 10
             }
@@ -86,8 +86,8 @@ export const stencilInit = (graph) => {
         height: 72,
         attrs: {
             body: {
-                fill: '#13C2C2',
-                stroke: '#acebe8',
+                fill: '#e7fefa',   // #89e7de
+                stroke: '#80e3dd',
                 lineWidth: 2,
                 rx: 10
             }
@@ -119,8 +119,8 @@ export const stencilInit = (graph) => {
         height: 72,
         attrs: {
             body: {
-                fill: '#05A465',
-                stroke: '#acebe8',
+                fill: '#cfe4d8',    // 6ac899
+                stroke: '#6fca9e',
                 lineWidth: 2,
                 rx: 10
             }

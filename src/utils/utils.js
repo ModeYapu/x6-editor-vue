@@ -67,7 +67,7 @@ function detailImportNode(node) {
         },
         body: {
             fill: node.color,
-            stroke: "rgba(250, 140, 22, 1)"
+            // stroke: "rgba(250, 140, 22, 1)"
         }
     }
     obj.size = {

@@ -2,24 +2,6 @@
 import { EventBus } from "../eventBus";
 
 export const eventResigner = (graph) => {
-    // graph.on('edge:mouseenter', ({ cell }) => {
-    //     cell.addTools([
-    //         // {
-    //         //     name: 'vertices',
-    //         //     args: {
-    //         //         snapRadius: 0,
-    //         //         stopPropagation: false
-    //         //     }
-    //         // },
-    //         // { name: 'source-arrowhead' },
-    //         { name: 'target-arrowhead' }
-    //     ])
-    // })
-    // graph.on('edge:mouseleave', ({ cell }) => {
-    //     cell.removeTools()
-    // })
-
-
     graph.on('node:selected', (args) => {
         // code here
         console.log('select args', args)
@@ -30,22 +12,18 @@ export const eventResigner = (graph) => {
         console.log('select args', args)
         EventBus.$emit('selectParams', { ...args, type: 'edge' })
     })
-    
-    graph.on('blank:click',(args)=>{
+
+    graph.on('blank:click', (args) => {
         EventBus.$emit('selectParams', { ...args, type: '' })
     })
 
-
-    graph.on('cell:contextmenu', ({ e, x, y, cell, view }) => {
-        console.log('cell:contextmenu', e, x, y, cell, view, Object.prototype.toString.call(cell))
+    graph.on('cell:contextmenu', ({ e, x, y, cell }) => {
         const type = Object.prototype.toString.call(cell) === '[object X6.Node]' ? 'node' : 'edge'
         EventBus.$emit('xypoint', { x: e.clientX, y: e.clientY, type: type, point: { x, y } })
         graph.resetSelection(cell)
     })
 
     graph.on('blank:contextmenu', ({ e, x, y }) => {
-        console.log('cell:contextmenu', e, x, y)
         EventBus.$emit('xypoint', { x: e.clientX, y: e.clientY, type: 'blank', point: { x, y } })
     })
-
 }

@@ -40,14 +40,14 @@ const portProps = {
             tagName: 'circle',
             selector: 'portBody',
             attrs: {
-                r: 4,
+                r: 2,
                 magnet: true,
-                stroke: '#2f54eb',
+                stroke: '#1890ff',
                 strokeWidth: 2,
                 fill: '#fff'
-            }
+            },
         }
-    ]
+    ],
 }
 
 const flowRect = Shape.Rect.define({

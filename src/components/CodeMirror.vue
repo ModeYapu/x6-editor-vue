@@ -10,6 +10,16 @@ import { codemirror } from 'vue-codemirror'
 
 // require styles
 import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/juejin.css'
+
+// 代码提示功能 具体语言可以从 codemirror/addon/hint/ 下引入多个
+import 'codemirror/addon/hint/show-hint.css';
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/hint/javascript-hint';
+// 高亮行功能
+import 'codemirror/addon/selection/active-line'
+import 'codemirror/addon/selection/selection-pointer'
+import 'codemirror/mode/javascript/javascript'
 
 export default {
     components: {
@@ -20,10 +30,17 @@ export default {
         return {
             cmOptions: {
                 tabSize: 4,
-                mode: 'application/json',
-                theme: 'base16-dark',
+                mode: 'javascript',
+                theme: 'juejin',
                 lineNumbers: true,
                 line: true,
+                // 高亮行功能
+                styleActiveLine: true,
+                // 代码提示功能
+                hintOptions: {
+                    // 避免由于提示列表只有一个提示信息时，自动填充
+                    completeSingle: false,
+                },
             }
         }
     },
@@ -72,5 +89,13 @@ export default {
 <style lang='less'>
 .CodeMirror {
     height: 100% !important;
+}
+
+.cm-string {
+    color: #a11 !important;
+}
+
+.cm-number {
+    color: #164 !important;
 }
 </style>

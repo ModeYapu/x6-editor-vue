@@ -12,7 +12,7 @@
             <div v-if="ShowJsonViewer" id="json-view-container">
                 <CodeMirror :code.sync='DataJson' @code="codeChange" />
             </div>
-            <div id="x6-props-minimap" v-if="!ShowJsonViewer">
+            <div id="x6-props-minimap" v-show="!ShowJsonViewer">
                 <ContextProps class="context-props" />
                 <div class="minimap">
                     <div class="minimap-title">小地图</div>
