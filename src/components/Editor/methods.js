@@ -19,7 +19,7 @@ function fitToContent() {
         padding: 10,
     })
 }
-function scaleContentToFit(options = {}) {
+function scaleContentToFit(options = { scaleGrid: 1, minScale: 1, maxScale: 1 }) {
     this.graph.scaleContentToFit(options)
 }
 function toFront() {

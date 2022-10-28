@@ -24,17 +24,17 @@
     <button @click="$emit('zoonOut')">
       <IconFont type="icon-zoomIn"></IconFont>
     </button>
-    <button @click="$emit('toFront')">
+    <button @click="$emit('fitToContent')">
       <IconFont type="icon-fit-map"></IconFont>
     </button>
-    <button @click="$emit('toBack')">
+    <button @click="$emit('scaleContentToFit')">
       <IconFont type="icon-actual-size"></IconFont>
     </button>
     |
-    <button @click="$emit('fitToContent')">
+    <button @click="$emit('toFront')">
       <IconFont type="icon-to-back"></IconFont>
     </button>
-    <button @click="$emit('scaleContentToFit')">
+    <button @click="$emit('toBack')">
       <IconFont type="icon-to-front"></IconFont>
     </button>
 
@@ -77,7 +77,6 @@ export default {
     return {
     }
   },
-
 
   computed: {},
 

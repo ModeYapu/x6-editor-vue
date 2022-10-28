@@ -29,8 +29,6 @@ export const eventResigner = (graph) => {
     })
 
     graph.on('selection:changed', (args) => {
-        // code here
-        console.log('selection:changed', args)
         EventBus.$emit('selectionChanged', args)
     })
 }

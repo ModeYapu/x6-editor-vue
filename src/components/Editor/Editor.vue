@@ -181,6 +181,7 @@ export default {
 .x6-wrapper {
     display: flex;
     height: calc(100vh - 43px);
+    overflow-y: scroll;
 }
 
 #x6-slider {
