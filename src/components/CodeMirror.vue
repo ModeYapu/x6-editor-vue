@@ -91,6 +91,10 @@ export default {
     height: 100% !important;
 }
 
+.vue-codemirror {
+    height: calc(100vh - 43px);
+}
+
 .cm-string {
     color: #a11 !important;
 }
