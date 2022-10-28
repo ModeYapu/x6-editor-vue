@@ -1,4 +1,5 @@
 import { portProps } from '../components/Register/define-node'
+import { ColorConfig } from '../components/Register/colorConfig'
 
 const exportJson = (json) => {
     console.log('jsno', json)
@@ -66,8 +67,8 @@ function detailImportNode(node) {
             text: node.label
         },
         body: {
-            fill: node.color,
-            // stroke: "rgba(250, 140, 22, 1)"
+            fill: ColorConfig[node.stateType].fill,
+            stroke: ColorConfig[node.stateType].stroke
         }
     }
     obj.size = {
@@ -147,6 +148,10 @@ const saveJSON = (data, filename) => {
 
     // 向一个指定的事件目标派发一个事件
     a.dispatchEvent(event);
+}
+
+export const CellType = (cell) => {
+    return Object.prototype.toString.call(cell) === '[object X6.Node]' ? 'node' : 'edge'
 }
 
 export {

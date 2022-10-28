@@ -1,4 +1,5 @@
 import { Addon } from '@antv/x6';
+import { ColorConfig } from '../Register/colorConfig';
 
 export const stencilInit = (graph) => {
     const stencil = new Addon.Stencil({
@@ -22,8 +23,8 @@ export const stencilInit = (graph) => {
         height: 72,
         attrs: {
             body: {
-                fill: '#fff3ea',  // #fdd594
-                stroke: '#ffc26d',
+                fill: ColorConfig['Start'].fill,
+                stroke: ColorConfig['Start'].stroke,
                 lineWidth: 2,
                 rx: 10
             }
@@ -45,13 +46,13 @@ export const stencilInit = (graph) => {
         height: 48,
         attrs: {
             body: {
-                fill: '#e8f8ff',  // #94d4fc
-                stroke: '#1890ff',
+                fill: ColorConfig['ServiceTask'].fill,
+                stroke: ColorConfig['ServiceTask'].stroke,
                 lineWidth: 2,
                 rx: 10
             }
         },
-        label: 'ServiceTask',
+        label: '服务任务',
         "stateId": "ServiceTask1",
         "stateType": "ServiceTask",
         "stateProps": {
@@ -86,13 +87,13 @@ export const stencilInit = (graph) => {
         height: 72,
         attrs: {
             body: {
-                fill: '#e7fefa',   // #89e7de
-                stroke: '#80e3dd',
+                fill: ColorConfig['Choice'].fill,
+                stroke: ColorConfig['Choice'].stroke,
                 lineWidth: 2,
                 rx: 10
             }
         },
-        label: 'Choice',
+        label: '选择',
         "stateId": "Choice1",
         "stateType": "Choice",
         "stateProps": '',
@@ -119,8 +120,8 @@ export const stencilInit = (graph) => {
         height: 72,
         attrs: {
             body: {
-                fill: '#cfe4d8',    // 6ac899
-                stroke: '#6fca9e',
+                fill: ColorConfig['Succeed'].fill,
+                stroke: ColorConfig['Succeed'].stroke,
                 lineWidth: 2,
                 rx: 10
             }

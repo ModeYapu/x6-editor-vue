@@ -26,6 +26,7 @@
 <script>
 import { Graph } from '@antv/x6';
 import '../Register/index'
+import './selectChange'
 import { stencilInit } from '../Stencil/Stencil'
 import CodeMirror from '../CodeMirror.vue'
 import ContextMenu from '../ContextMenu.vue'
@@ -136,9 +137,9 @@ export default {
             eventResigner(this.graph)
 
             this.history = this.graph.history
-            
+
             bindKey(this.graph, this)
-            
+
             this.history.on('change', () => {
                 this.state.canRedo = this.history.canRedo()
                 this.state.canUndo = this.history.canUndo()
