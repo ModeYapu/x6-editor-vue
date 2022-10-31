@@ -8,7 +8,8 @@ Shape.Edge.config({
       endArrow: true,
       stroke: '#F6BD16'
     }
-  }
+  },
+  shape: 'flow-polyline'
 })
 
 const flowEdge = Shape.Edge.define({
@@ -50,7 +51,7 @@ const flowPolylineRound = Shape.Edge.define({
   },
   connector: 'rounded',
   router: {
-    name: 'orth',
+    name: 'er',
   },
 })
 const flowSmooth = Shape.Edge.define({

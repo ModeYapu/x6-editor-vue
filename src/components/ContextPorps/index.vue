@@ -138,7 +138,7 @@ export default {
                     cells[0].setRouter('orth')
                     cells[0].setConnector('normal')
                 } else if (value === 'flow-polyline-round') {
-                    cells[0].setRouter('orth')
+                    cells[0].setRouter('er')
                     cells[0].setConnector('rounded')
                 } else if (value === 'flow-smooth') {
                     cells[0].setConnector('smooth')

@@ -162,6 +162,7 @@ export default {
             // this.removeEventListener()
             const jsonStr = JSON.stringify(exportJson(this.graph.toJSON()))
             this.DataJson = JSON.stringify(JSON.parse(jsonStr), null, 2)
+            this.codeChangeJson = importJson(JSON.parse(this.DataJson))
             // this.graph.dispose()
         },
         codeChange(params) {
