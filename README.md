@@ -1,5 +1,3 @@
-# x6-editor-vue
-
 ## Project setup
 ```
 yarn install

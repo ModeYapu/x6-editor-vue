@@ -39,6 +39,7 @@ import { bindKey } from '../bindKey'
 import Vue from 'vue';
 
 export default {
+    name:'Editor',
     components: {
         CodeMirror,
         ContextMenu,

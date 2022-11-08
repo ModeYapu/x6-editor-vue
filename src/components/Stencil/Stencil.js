@@ -126,7 +126,7 @@ export const stencilInit = (graph) => {
                 rx: 10
             }
         },
-        label: '成功',
+        label: '结束',
         "stateId": "Succeed1",
         "stateType": "Succeed",
         "stateProps": '',

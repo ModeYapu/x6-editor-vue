@@ -1,11 +1,14 @@
 {
-  "name": "x6-editor-vue",
+  "name": "Editor",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build:wc": "vue-cli-service build --target wc --name Editor ./src/components/Editor/Editor.vue",
+    "build:lib": "vue-cli-service build --mode production --target lib --inline-vue --name Editor ./src/index.js",
+    "build:lib2": "vue-cli-service build --mode production --target lib --inline-vue --name Editor ./src/editorInstall.js"
   },
   "dependencies": {
     "@antv/x6": "^1.34.5",
@@ -17,6 +20,7 @@
     "vue-codemirror": "^4.0.6"
   },
   "devDependencies": {
+    "@purtuga/esm-webpack-plugin": "^1.5.0",
     "@vue/cli-plugin-babel": "~4.5.11",
     "@vue/cli-plugin-eslint": "~4.5.11",
     "@vue/cli-service": "~4.5.11",
