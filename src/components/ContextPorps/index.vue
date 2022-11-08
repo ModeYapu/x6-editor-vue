@@ -52,11 +52,23 @@
 </template>
 
 <script>
+import Form from 'ant-design-vue/lib/form'
+import 'ant-design-vue/lib/form/style/css'
+import Input from 'ant-design-vue/lib/input'
+import 'ant-design-vue/lib/input/style/css'
+import Select from 'ant-design-vue/lib/select'
+import 'ant-design-vue/lib/select/style/css'
+
 import { EventBus } from "../../eventBus";
 
 export default {
     components: {
-
+        "a-form": Form,
+        'a-form-item': Form.Item,
+        "a-input": Input,
+        'a-textarea': Input.TextArea,
+        'a-select': Select,
+        'a-select-option':Select.Option
     },
     props: ['point'],
     data() {

@@ -32,7 +32,8 @@
 
 <script>
 import { EventBus } from "../eventBus";
-import { Icon } from 'ant-design-vue'
+import Icon from 'ant-design-vue/lib/icon'
+import 'ant-design-vue/lib/icon/style/css'
 
 const IconFont = Icon.createFromIconfontCN({
     scriptUrl: require('../assets/font_1518433_oa5sw7ezue.js'),

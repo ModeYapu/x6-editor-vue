@@ -131,8 +131,10 @@
 
 <script>
 import { EventBus } from '../../eventBus'
-import { Icon } from 'ant-design-vue'
-
+import Icon from 'ant-design-vue/lib/icon'
+import 'ant-design-vue/lib/icon/style/css'
+import Tooltip from 'ant-design-vue/lib/tooltip'
+import 'ant-design-vue/lib/tooltip/style/css'
 const IconFont = Icon.createFromIconfontCN({
   scriptUrl: 'https://at.alicdn.com/t/font_1101588_01zniftxm9yp.js',
 })
@@ -143,7 +145,9 @@ const IconFontExt = Icon.createFromIconfontCN({
 export default {
   components: {
     IconFont: IconFont,
-    IconFontExt: IconFontExt
+    IconFontExt: IconFontExt,
+    'a-tooltip': Tooltip,
+    'a-icon': Icon
   },
   props: ['historyState'],
   data() {
