@@ -3,7 +3,7 @@
         <div v-if="ChoiceType === 'node'">
             <div class="title">节点</div>
             <div class="from-content">
-                <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+                <a-form  :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
                     <a-form-item label="标签">
                         <a-input v-model="nodeArgs.label" @change="onChange('label')" />
                     </a-form-item>
@@ -22,7 +22,7 @@
         <div v-if="ChoiceType === 'edge'">
             <div class="title">边</div>
             <div class="from-content">
-                <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
+                <a-form  :label-col="{ span: 5 }" :wrapper-col="{ span: 18 }">
                     <a-form-item label="标签">
                         <a-input v-model="nodeArgs.label" @change="onChange('label')" />
                     </a-form-item>
@@ -74,7 +74,7 @@ export default {
     data() {
         return {
             formLayout: 'horizontal',
-            form: this.$form.createForm(this, { name: 'coordinated' }),
+            // form: Form.create(this, { name: 'coordinated' }),
             params: {},
             ChoiceType: '',
             nodeArgs: {
