@@ -66,10 +66,7 @@ Vue.use(ref, { name: 'ant-ref' });
 // import Modal from 'ant-design-vue/lib/modal'
 import antDirective from 'ant-design-vue/es/_util/antDirective'
 Vue.use(antDirective)
-// Vue.use(Modal)
-// Vue.use(Input)
-// Vue.use(Select)
-// Vue.use(Form)
+
 import { EventBus } from "../../eventBus";
 
 export default {
